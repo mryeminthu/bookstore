@@ -55,6 +55,7 @@
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
+## 💻 Getting Started <a name="getting-started"></a>
 
 To install a duplicate of this project on your computer, kindly abide by the guidelines provided below.
 
