@@ -128,7 +128,7 @@ You can deploy this project using: GitHub Pages.
 ## 🤝 Contributing <a name="contributing"></a>
 
 Contributions, issues, and feature requests are welcome!
-Feel free to check the [issues page](https://github.com/mryeminthu/math-magicians/issues).
+Feel free to check the [issues page](https://github.com/mryeminthu/bookstore/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -152,6 +152,6 @@ I want to express my gratitude to Microverse for providing the materials.
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/mryeminthu/math-magicians/blob/main/LICENSE) licensed.
+This project is [MIT](https://github.com/mryeminthu/bookstore/blob/main/LICENSE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
