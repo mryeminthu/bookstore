@@ -1,55 +1,57 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addBook } from '../redux/books/booksSlice';
+import { addbook, postBook } from '../redux/books/booksSlice';
 
 const AddBookForm = () => {
-  const [book, setBook] = useState({ title: '', author: '' });
   const dispatch = useDispatch();
+  const [formData, setFormData] = useState({ title: '', author: '' });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBook({ ...book, [name]: value });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.title !== '' || formData.author !== '') {
+      const bookObject = {
+        title: formData.title,
+        author: formData.author,
+      };
+      dispatch(addbook(bookObject));
+      await dispatch(postBook(bookObject));
+      setFormData({ title: '', author: '' });
+    }
   };
 
-  const handleAddBook = () => {
-    if (book.title.trim() === '' || book.author.trim() === '') {
-      return;
-    }
-
-    const newBook = {
-      item_id: 'unique_id',
-      title: book.title,
-      author: book.author,
-      category: 'Fiction',
-    };
-
-    dispatch(addBook(newBook));
-
-    setBook({ title: '', author: '' });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
-    <div className="add_book">
+    <div className="new-AddBook">
       <h2>ADD NEW BOOK</h2>
-      <div>
+      <form className="new-bookform">
         <input
           type="text"
+          className="new-bookTitle"
+          placeholder="Book title"
           name="title"
-          placeholder="Add Title"
-          value={book.title}
-          onChange={handleInputChange}
+          value={formData.title}
+          onChange={handleChange}
+          required
         />
+        <br />
         <input
           type="text"
+          className="new-authorName"
+          placeholder="Author Name"
           name="author"
-          placeholder="Add Author"
-          value={book.author}
-          onChange={handleInputChange}
+          value={formData.author}
+          onChange={handleChange}
+          required
         />
-        <button type="button" onClick={handleAddBook}>
+        <br />
+        <button type="submit" onClick={handleSubmit}>
           ADD BOOK
         </button>
-      </div>
+      </form>
     </div>
   );
 };
