@@ -1,52 +1,94 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+
+const url = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/QcHrmfM8HW7xIX8Dl6sz/books';
 
 const initialState = {
-  books: [
-    {
-      item_id: 'item1',
-      title: 'The Great Gatsby',
-      author: 'John Smith',
-      category: 'Fiction',
-    },
-    {
-      item_id: 'item2',
-      title: 'Anna Karenina',
-      author: 'Leo Tolstoy',
-      category: 'Fiction',
-    },
-    {
-      item_id: 'item3',
-      title: 'The Selfish Gene',
-      author: 'Richard Dawkins',
-      category: 'Nonfiction',
-    },
-  ],
-  newlyAddedBooks: [],
+  books: [],
+  isLoading: true,
 };
 
-const booksSlice = createSlice({
-  name: 'books',
+export const fetchBooks = createAsyncThunk('books/getBooks', async () => {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch books');
+  }
+});
+
+export const postBook = createAsyncThunk('books/postBooks', async (book) => {
+  try {
+    const response = await axios.post(url, {
+      item_id: uuidv4(),
+      title: book.title,
+      author: book.author,
+      category: 'Book',
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to post book');
+  }
+});
+
+export const deleteBook = createAsyncThunk('books/deleteBook', async (id) => {
+  const deleteurl = `${url}/${id.id}`;
+  try {
+    const response = await axios.delete(deleteurl, {
+      item_id: id.id,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to delete book');
+  }
+});
+
+const bookSlice = createSlice({
+  name: 'bookstore',
   initialState,
   reducers: {
-    addBook: (state, action) => {
-      const newBook = {
-        item_id: 'unique_id',
-        title: action.payload.title,
-        author: action.payload.author,
-        category: 'Fiction',
-        isNew: true,
+    addbook: (state, action) => {
+      const { title, author } = action.payload;
+      const bookObject = {
+        title,
+        author,
+        item_id: uuidv4(),
       };
-      state.books.push(newBook);
-      state.newlyAddedBooks.push(newBook);
+      return {
+        ...state,
+        books: [...state.books, bookObject],
+      };
     },
-    removeBook: (state, action) => {
-      state.books = state.books.filter((book) => book.item_id !== action.payload);
-      state.newlyAddedBooks = state.newlyAddedBooks.filter(
-        (book) => book.item_id !== action.payload,
-      );
+    removebook: (state, action) => {
+      const { id } = action.payload;
+      return {
+        ...state,
+        books: state.books.filter((book) => book.item_id !== id),
+      };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBooks.pending, (state) => ({
+        ...state,
+        isLoading: true,
+      }))
+      .addCase(fetchBooks.fulfilled, (state, action) => ({
+        ...state,
+        isLoading: false,
+        books: Object.entries(action.payload).map(([id]) => ({
+          title: action.payload[id][0].title,
+          author: action.payload[id][0].author,
+          item_id: id,
+        })),
+      }))
+      .addCase(fetchBooks.rejected, (state) => ({
+        ...state,
+        isLoading: false,
+      }));
   },
 });
 
-export const { addBook, removeBook } = booksSlice.actions;
-export default booksSlice.reducer;
+export const { addbook, removebook } = bookSlice.actions;
+export default bookSlice.reducer;
