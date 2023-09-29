@@ -17,6 +17,7 @@ const Book = ({ id, title, author }) => {
     <article className="new-books-container">
       <section className="new-book-item">
         <header className="new-section1">
+          <p className="fiction">Fiction</p>
           <h2>{title}</h2>
           <p>{author}</p>
           <div className="new-book-button-section">
@@ -39,7 +40,7 @@ const Book = ({ id, title, author }) => {
         <section className="new-section3">
           <p>CURRENT CHAPTER</p>
           <h3>Chapter 10</h3>
-          <button type="button">Update Progress</button>
+          <button className="update-button" type="button">Update Progress</button>
         </section>
       </section>
     </article>
