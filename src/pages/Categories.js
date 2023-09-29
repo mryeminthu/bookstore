@@ -1,10 +1,8 @@
 import React from 'react';
 
 const Categories = () => (
-  <div className="categories">
-    <div className="categ_text">
-      <button type="button">Check status</button>
-    </div>
+  <div className="categ_text">
+    <h3>Under Construction...</h3>
   </div>
 );
 

@@ -17,6 +17,7 @@ const Book = ({ id, title, author }) => {
     <article className="new-books-container">
       <section className="new-book-item">
         <header className="new-section1">
+          <p className="fiction">Fiction</p>
           <h2>{title}</h2>
           <p>{author}</p>
           <div className="new-book-button-section">
@@ -29,17 +30,17 @@ const Book = ({ id, title, author }) => {
         </header>
         <section className="new-section2">
           <div className="new-progress-bar">
-            <CircularProgressbar value="70" text="70%" />
+            <CircularProgressbar value="64" text="64%" />
           </div>
           <div>
-            <h2>70 %</h2>
+            <h2>64%</h2>
             <p>Completed</p>
           </div>
         </section>
         <section className="new-section3">
           <p>CURRENT CHAPTER</p>
           <h3>Chapter 10</h3>
-          <button type="button">Update Progress</button>
+          <button className="update-button" type="button">UPDATE PROGRESS</button>
         </section>
       </section>
     </article>
