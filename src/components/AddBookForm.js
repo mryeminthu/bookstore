@@ -43,7 +43,7 @@ const AddBookForm = () => {
           <input
             type="text"
             className="new-authorName"
-            placeholder="Author Name"
+            placeholder="Category"
             name="author"
             value={formData.author}
             onChange={handleChange}
