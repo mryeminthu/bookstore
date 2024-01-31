@@ -56,7 +56,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://bookstore-ymt.onrender.com/)
+- [Live Demo Link](https://ymt-bookstore.onrender.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
